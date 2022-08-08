@@ -1,0 +1,12 @@
+{
+    "security": {
+        "jwt_key":"key-secret",
+        "access_token_secret": "d86b5fe4ecd28c91d578c754bdbf51ab349c5aad5a9f7e91ee38b94ab2fc9b9bba68b0ded25931df79dd6cf0bb19101458c9c63c6f2820170f460ace0d025b72"
+    },
+    "db": {
+    "username": "stefan-galeb",
+    "password": "stefangaleb2509",
+    "host": "clusterfmk.4w2mqu7.mongodb.net/",
+    "dbname": "ClusterFMK"
+    }
+}
