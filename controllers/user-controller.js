@@ -4,33 +4,33 @@ const jwt  = require('jsonwebtoken') ;
 const config = require('../config.json') ;
 
 
-// const authorization = async (req, res, next) => {
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split(' ')[1]
-//     if(token == null) return res.status(401)
+const authorization = async (req, res, next) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if(token == null) return res.status(401)
 
-//     jwt.verify(token, config.security.access_token_secret, (err, user) => {
-//         if(err) return res.status(403)
-//         req.user = user
-//         next()
-//     })
-// }
+    jwt.verify(token, config.security.access_token_secret, (err, user) => {
+        if(err) return res.status(403)
+        req.user = user
+        next()
+    })
+}
 
-// const adminAuthorization = async (req, res, next) => {
-//     const existingUser = await User.findOne({ email }) 
-//     if(existingUser.isAdmin){
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split(' ')[1]
-//     if(token == null) return res.status(401)
+const adminAuthorization = async (req, res, next) => {
+    const existingUser = await User.findOne({ email }) 
+    if(existingUser.isAdmin){
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if(token == null) return res.status(401)
 
-//     jwt.verify(token, config.security.access_token_secret, (err, user) => {
-//         if(err) return res.status(403)
-//         req.user = user
-//         next()
-//     })
-//     }
-//     return res.status(401)
-// }
+    jwt.verify(token, config.security.access_token_secret, (err, user) => {
+        if(err) return res.status(403)
+        req.user = user
+        next()
+    })
+    }
+    return res.status(401)
+}
 
 const create = async (req, res) => {
     try {
@@ -77,7 +77,7 @@ const login = async (req, res) => {
                 exp: (new Date().getTime() + (365 * 24 * 60 * 60 * 1000)) / 1000
             };
             
-            const accessToken = jwt.sign(payload.username, config.security.access_token_secret)
+            const accessToken = jwt.sign(payload, config.security.access_token_secret)
     
             return res.status(200).send({user:ru, jwt: accessToken});
         }
@@ -116,5 +116,7 @@ module.exports = {
     create,
     login,
     getUser,
-    updateUser
+    updateUser,
+    authorization,
+    adminAuthorization
 };
