@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 
 const Ticket = mongoose.model(
-    'ticket',
-    {
-        games:Array({
-            hometeam:String,
-            awayteam:String,
-            bet:String,
-            finalScore:String
+    'ticket', {
+        games: Array({
+            fid: String,
+            hometeam: String,
+            awayteam: String,
+            bet: String,
+            matchStatus: String,
+            finalScore: Object,
+            scoreComp:String,
+            betStatus: String
         }),
-        uid:String,
-        isWinner:Boolean,
-        date:Date
+        uid: String,
+        isWinner: Boolean,
+        date: Date,
+        isTicketChecked: Boolean
     },
     'ticket'
 );
@@ -22,11 +26,23 @@ const placeBet = async (data) => {
 };
 
 const getByUserId = async (uid) => {
-    let data = await Ticket.find({ uid:uid })
+    let data = await Ticket.find({ uid: uid })
     return data;
+};
+
+const getOneTicket = async(tid) => {
+    let data = await Ticket.findOne({_id: tid})
+    return data;
+} 
+
+const update = async (tid, ticket) => {
+    let data = await News.Ticket({ _id: tid }, ticket)
+    return data.nModified !== 0;
 };
 
 module.exports = {
     placeBet,
-    getByUserId
+    getByUserId,
+    update,
+    getOneTicket
 }

@@ -5,6 +5,8 @@ const User = mongoose.model(
     {
         firstName:String,
         lastName:String,
+        betCount:Number,
+        correctBetCount:Number,
         username:String,
         email:String,
         isAdmin:Boolean,

@@ -9,7 +9,10 @@ const Game = mongoose.model(
         away: String,
         alogo: String,   
         score: Object, 
-        time: String,
+        time: Date,
+        betStatus: String,
+        matchStatus:String,
+        _deleted: Boolean
     },
     'games'
 );
@@ -20,11 +23,23 @@ const addGamesToBet = async (data) => {
 };
 
 const getGamesToBet = async () => {
-    let game = await Game.find({}).sort({time: -1}).limit(9)
+    let game = await Game.find({_deleted: false}).sort({time: -1}).limit(9)
     return game;
+} 
+
+const getOneGame = async(fid) => {
+    let data = await Game.findOne({fid: fid})
+    return data;
+}
+
+const updateGame = async (fid, gameData) => {
+    let data = await Game.updateOne({fid: fid}, gameData)
+    return data.nModified !== 0;
 }
 
 module.exports = {
     addGamesToBet,
-    getGamesToBet
+    getGamesToBet,
+    getOneGame,
+    updateGame 
 }

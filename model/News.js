@@ -44,8 +44,8 @@ const getByTags = async (tag) => {
     return data;
 };
 
-const update = async (rid, recipeData) => {
-        let data = await News.updateOne({_id: rid}, recipeData)
+const update = async (rid, newsData) => {
+        let data = await News.updateOne({_id: rid}, newsData)
         return data.nModified !== 0;
 };
 
